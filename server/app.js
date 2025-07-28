@@ -26,12 +26,18 @@ export const userSocketMap = {}; // {userId : socketId}
 // socket.io connection handler
 
 io.on("connection", (socket)=>{
+    const token = socket.handshake.query.token;
+    if(!token){
+        console.log("jwt frontend se aana chahiye");
+        socket.disconnect();
+        return;
+    }
     const userId = socket.handshake.query.userId;
     console.log("User connected", userId);
     if(userId) userSocketMap[userId] = socket.id;
     // Emit online users to all connected clients
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
-    socket.on("disconnected", ()=>{
+    socket.on("disconnect", ()=>{
         console.log("User disconnected", userId);
         delete userSocketMap[userId];
         io.emit("getOnlineUsers", Object.keys(userSocketMap))
@@ -42,7 +48,7 @@ io.on("connection", (socket)=>{
 // Middleware setup
 
 app.use(cors());
-app.use(express.json({limit : '4mb'}));
+app.use(express.json({limit : '10mb'}));
 
 // Route setup
 
