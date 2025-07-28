@@ -78,7 +78,7 @@ export const AuthProvider = ({children})=>{
         if(!userData || socket?.connected){
             return;
         }
-        const token = localStorage.getItem("toekn");
+        const token = localStorage.getItem("token");
         if(socket) socket.disconnect();
         const newSocket = io(backendUrl, {
             query:{
@@ -86,7 +86,6 @@ export const AuthProvider = ({children})=>{
                 token: token,
             }
         });
-        newSocket.connect();
         setSocket(newSocket);
         newSocket.on("getOnlineUsers", (userIds)=>{
             setOnlineUser(userIds);
