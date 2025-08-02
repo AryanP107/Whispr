@@ -71,7 +71,7 @@ const Chat = () => {
                 <p className={`p-2 max-w-[200px] rounded-lg mb-8 break-all bg-violet-500/30 text-white md:text-sm font-light ${msg.senderId === authUser._id ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
             )}
             <div className='text-center text-xs'>
-              <img src={msg.senderId === authUser._id ? authUser?.profilePic || assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon} alt="Profile icon"  className='w-7 rounded-full'/>
+              <img src={msg.senderId === authUser._id ? selectedUser?.profilePic || assets.avatar_icon : authUser?.profilePic || assets.avatar_icon} alt="Profile icon"  className='w-7 rounded-full'/>
               <p className='text-gray-500'>{ formatMessageTime(msg.createdAt)}</p>
 
             </div>
